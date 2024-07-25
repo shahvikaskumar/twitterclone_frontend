@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart, faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../../context/authcontext';
 import axios from 'axios';
-import { Base_URL } from '../../..//Utility/constant';
+import { Base_URL } from '../../..//Utility/config';
 
 
 

@@ -1,7 +1,7 @@
 import {Link, useNavigate} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faComments} from '@fortawesome/free-regular-svg-icons';
-import {Base_URL} from '../Utility/constant';
+import {Base_URL} from '../Utility/config';
 import { useToast } from '../context/toastcontext';
 import { useState } from 'react';
 import axios from 'axios';

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faComments} from '@fortawesome/free-regular-svg-icons';
-import {Base_URL} from '../Utility/constant';
+import {Base_URL} from '../Utility/config';
 import {useToast} from '../context/toastcontext';
 import {useAuth} from '../context/authcontext';
 import axios from 'axios';

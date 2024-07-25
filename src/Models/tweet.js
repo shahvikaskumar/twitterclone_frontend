@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import {useAuth} from '../context/authcontext';
 import axios from 'axios';
-import { Base_URL } from "../Utility/constant";
+import { Base_URL } from "../Utility/config";
 import { useToast } from '../context/toastcontext';
 
 const Tweetpost = ({showmodal, closemodal}) => {
