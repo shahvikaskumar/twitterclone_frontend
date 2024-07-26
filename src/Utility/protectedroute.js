@@ -1,18 +1,33 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/authcontext";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { setloading} from "../redux/slice/authslice";
+import Loading from "../components/loading/loading";
 
 const ProtectedRoute = ({children}) => {
-    // Retrieve authentication data from context
-    const {auth} = useAuth();
 
-    // If user is not authenticated, navigate to the login page
-    if(!auth.isauth){
-        return <Navigate to='/login' />
+    const dispatch = useDispatch();
+    const isauth = useSelector((state) => state.auth.isauth);
+    const {loading} = useSelector((state) => state.auth);    
+    const [redirectPath, setRedirectPath] = useState(null);
+    
+    useEffect(() => {
+        dispatch(setloading(true));    
+        if (!isauth) {
+            setRedirectPath('/login');
+        } 
+        dispatch(setloading(false));
+    }, [isauth, dispatch]);
+
+    if (loading) {        
+        return <Loading />;
     }
 
-    // If user is authenticated, render the child components
-    return children;
+    if (redirectPath) {
+        return <Navigate to={redirectPath} />;
+    }
+    return children;    
+    
 };
 
 export default ProtectedRoute;

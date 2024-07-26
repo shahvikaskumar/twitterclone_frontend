@@ -1,14 +1,12 @@
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import {useAuth} from '../context/authcontext';
+
 import axios from 'axios';
 import { Base_URL } from "../Utility/config";
-import { useToast } from '../context/toastcontext';
+
 
 const Tweetpost = ({showmodal, closemodal}) => {
-    const {auth} = useAuth();
-    const showToast = useToast();
     
     const [formdata, setformdata] = useState({ content: '', image: null });
 

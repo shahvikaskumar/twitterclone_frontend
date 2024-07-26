@@ -1,16 +1,16 @@
 import {Link, useNavigate} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faComments} from '@fortawesome/free-regular-svg-icons';
-import {Base_URL} from '../Utility/config';
-import { useToast } from '../context/toastcontext';
 import { useState } from 'react';
-import axios from 'axios';
-
+import {useSelector, useDispatch} from 'react-redux';
+import { register } from '../../redux/slice/authslice';
+import { showtoast } from '../../redux/slice/toastslice';
+import Loading from '../loading/loading';
 
 const Register = () => {
-    
-    const showToast = useToast();
 
+    const loading = useSelector((state) => state.auth.loading);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [formdata,setformdata] = useState({
@@ -18,7 +18,6 @@ const Register = () => {
         email:'',
         uname:'',
         password:''
-
     });
 
     const handlechange = (e) => {
@@ -30,20 +29,15 @@ const Register = () => {
 
     const handlesubmit = async (e) => {
         e.preventDefault();
-
-        try{
-            const response=await axios.post(`${Base_URL}auth/register`,formdata);
-            showToast(response.data.success,"success");
-            navigate("/login");
-        }
-        catch(err){
-            showToast(err.response?.data?.error || 'An error occurred', 'error');
-        }
+        dispatch(register(formdata,navigate,showtoast));
+        
     };
     
 
     
     return (
+        <>
+        {loading && <Loading />}
         <div className="row align-items-center justify-content-center min-vh-100  bg-body-secondary m-0">
             <div className='col-11 col-lg-10 col-xl-8 col-xxl-6 shadow rounded-4 bg-primary p-0 my-4'>
                 <div className='row m-0'>
@@ -65,6 +59,7 @@ const Register = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 };
 

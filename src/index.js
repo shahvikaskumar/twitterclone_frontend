@@ -5,14 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import {ToastProvider } from './context/toastcontext';
-import {AuthProvider} from './context/authcontext';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import { ToastProvider } from './redux/provider/toastprovider';
+import AuthProvider from './redux/provider/authprovider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <Router>
       <AuthProvider>
         <ToastProvider>
@@ -20,6 +22,7 @@ root.render(
         </ToastProvider>
       </AuthProvider>
     </Router>
+    </Provider>
   </React.StrictMode>
 );
 
