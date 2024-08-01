@@ -77,7 +77,7 @@ const Tweetcard = (props) => {
             <div className="d-flex mx-2 ">
                 <div className='ratio flex-shrink-0 ratio-1x1  rounded-circle overflow-hidden' style={{width:"40px" , height:"40px"}}>
                     {tweet?.tweetedby?.profile_picurl  ? (
-                    <img className='img-fluid' src="https://res.cloudinary.com/dp0wfs6kx/image/upload/v1722175984/arham-tweet/images/ewkjmu4j3toctv05juzq.jpg"  alt=""  />
+                    <img className='img-fluid' src={tweet?.tweetedby?.profilepicurl}  alt=""  />
                     ) : (
                         <FontAwesomeIcon icon={faUserCircle} />
                     )}
@@ -94,7 +94,7 @@ const Tweetcard = (props) => {
                     <p className='ms-2  text-wrap'>{tweet?.content}
                     </p>
                     {tweet?.imageurl && 
-                    <img className='img-fluid' src={tweet.imageurl} alt="" />
+                    <img className='img-fluid' src={tweet?.imageurl} alt="" />
                     }
                     </div>
                     <div className='d-flex justify-content-around'>
