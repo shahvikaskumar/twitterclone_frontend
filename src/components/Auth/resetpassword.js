@@ -52,7 +52,7 @@ const Resetpasswordform = () => {
                         <FontAwesomeIcon className='mt-3 mb-5 text-white' icon={faComments} size='8x' /> 
                     </div>
                     <div className='col-12 col-md-7 text-center bg-white rounded-4 py-2'>
-                        <h1 className='fw-bold display-4 py-3'>Forgot Password</h1>
+                        <h1 className='fw-bold display-4 py-3'>Reset Password</h1>
                         <form id='loginform' onSubmit={handlesubmit} className='my-4 d-flex flex-column justify-content-center align-items-center'>
                             <input className='form-control mb-3 rounded-5 px-4 py-2 w-75' type='password' name="password" id="password" placeholder='Password' value={formdata.password} onChange={handlechange} />                           
                             <input className='form-control mb-3 rounded-5 px-4 py-2 w-75' type='password' name="cpassword" id="cpassword" placeholder='Confirm Password' value={formdata.cpassword} onChange={handlechange} />                           

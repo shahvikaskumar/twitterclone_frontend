@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { Base_URL } from "../../Utility/config";
 
@@ -6,7 +6,8 @@ const initialState = {
     token:null,
     isauth:false,
     user:'',
-    loading:false,    
+    loading:false,  
+    mloader:false,     
 };
 
 const authslice = createSlice({
@@ -34,18 +35,18 @@ const authslice = createSlice({
             state.loading = action.payload;
         },        
 
+        setmloader(state,action){
+            state.mloader = action.payload;
+        },        
+
         seterror(state, action){
             state.error = action.payload;
             state.loading = false;
         },
 
         setuserupdate(state,action){
-            state.user=action.payload;
-            const updateuser = action.payload;
-            const userindex = state.allusers.findIndex(user => user._id === updateuser._id);
-            if (userindex !== -1) {
-              state.allusers[userindex] = updateuser;            }
-        },
+            state.user=action.payload;            
+        },        
     },
 });
 
@@ -171,54 +172,6 @@ export const Resetpassword = (data, navigate, showtoast) => async  (dispatch) =>
     }
 };
 
-export const Getalluser = (token) => async(dispatch) => {
-    try{
-        dispatch(setloading(true));
-        const config = {
-            headers:{      
-                Authorization:`Bearer ${token}`
-            }
-          };
-        const response = await axios.get(`${Base_URL}users/all`,config);
-        dispatch(setallusers(response.data.data));
-        
-    }
-    catch(error){
-        console.log(error);        
-    }
-    finally{
-        dispatch(setloading(false));
-    }
-};
-
-
-export const Updateprofile = createAsyncThunk('user/update', async({data, uid, token, showtoast},{dispatch}) => {
-    
-    try{
-        dispatch(setloading(true));        
-        const config = {
-            headers:{      
-              'Content-Type':'multipart/form-data',              
-              Authorization:`Bearer ${token}`
-            }
-          };
-          
-        const response = await axios.put(`${Base_URL}user/update/${uid}`,data, config);
-        dispatch(showtoast({message:response.data.success, type:'success'}));          
-        dispatch(setuserupdate(response.data.user));
-          
-    }
-    catch(err){
-        console.log(err.response.data);
-        dispatch(showtoast({message:err.response?.data?.error || 'An error occured', type:'error'}));
-        
-    }
-    finally{
-        dispatch(setloading(false));        
-    }
-
-});
-
-export const {setauth, setallusers, setuserupdate, clearauth, setloading, setmloader , seterror} = authslice.actions;
+export const {setauth, setallusers, setsingleuser , setuserupdate, clearauth, setloading, setmloader , seterror} = authslice.actions;
 
 export default authslice.reducer;

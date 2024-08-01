@@ -13,7 +13,7 @@ import AuthProvider from './redux/provider/authprovider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
     <Router>
       <AuthProvider>
@@ -23,7 +23,7 @@ root.render(
       </AuthProvider>
     </Router>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

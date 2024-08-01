@@ -1,0 +1,17 @@
+.linkhover{
+    color:rgba(255,255,255,50%);
+    text-decoration: none;
+    width: 100%;
+    border-radius: 5rem;
+    
+}
+
+.linkhover:hover{
+    background-color: rgb(80, 80, 80);
+    color:white;
+}
+
+.active-link{
+    background-color: rgb(80, 80, 80);
+    color:white;
+}
