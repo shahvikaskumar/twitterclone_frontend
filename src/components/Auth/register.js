@@ -20,6 +20,7 @@ const Register = () => {
         password:''
     });
 
+    // Update form data state when input changes
     const handlechange = (e) => {
         setformdata({
             ...formdata,
@@ -27,12 +28,12 @@ const Register = () => {
         });
     };
 
+    // Handle form submission
     const handlesubmit = async (e) => {
         e.preventDefault();
         dispatch(register(formdata,navigate,showtoast));
         
-    };
-    
+    };    
 
     
     return (

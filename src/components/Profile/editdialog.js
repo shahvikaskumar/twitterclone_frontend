@@ -10,14 +10,18 @@ const Edituserdetail = (props) => {
     const dispatch = useDispatch()
     const showmodal = useSelector((state) => state.user.btnedit); 
     const {token, user, loading} = useSelector((state) => state.auth);
+    
+    // Initial state for form data
     const initialdata = {
         name:'',
         dateofbirth:'',
         location:'',
     };
 
+
     const [formdata, setformdata] = useState(initialdata);
 
+    // Update form data when props.user or showmodal changes
     useEffect(() => {
         if(props.user){
 
@@ -35,16 +39,18 @@ const Edituserdetail = (props) => {
         
     },[props.user, showmodal]);
 
-    
+    // Close the modal and reset form data
     const handleclose = () => {
         setformdata(initialdata);
         dispatch(setbtnedit(false));
     };
 
+    // Update form data on input change
     const handlechange = (e) => {
         setformdata({...formdata, [e.target.name]:e.target.value});
     };
     
+    // Submit form data to update profile
     const handlesubmit = async(e) => {
         e.preventDefault();                
         dispatch(Profileedit(token, formdata, user._id, showtoast));

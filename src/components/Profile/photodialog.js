@@ -10,9 +10,12 @@ const Profilephoto = () => {
     const dispatch = useDispatch()
     const showmodal = useSelector((state) => state.user.btnphoto);
     const {token, loading, user} = useSelector((state) => state.auth); 
+
+    // State for image preview and form data
     const [imgpre, setimgpre] = useState(null);  
     const [formdata, setformdata] = useState({userid:'', image:''});
 
+    // Handle file input change and update image preview
     const handlechange = (e) => {
         const {type, files} =e.target;
         if(type === "file"){
@@ -25,11 +28,13 @@ const Profilephoto = () => {
         }
     };
 
+    // Close modal and reset image preview
     const handleclose = () => {
         setimgpre(null);
         dispatch(setbtnphoto(false));
     };
 
+    // Submit image update to the server
     const handlesubmit = () => {
         if(formdata.image !== ''){
         dispatch(Profilepicupdate(token, formdata, showtoast));

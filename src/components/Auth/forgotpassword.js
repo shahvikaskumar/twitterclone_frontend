@@ -18,12 +18,14 @@ const Forgotpassword = () => {
         email:''        
     });
 
+    // Update form data state when input changes
     const handlechange = (e) => {
         setformdata({
             ...formdata, [e.target.name]:e.target.value
         });
     };
 
+    // Handle form submission
     const handlesubmit = async (e) => {
         e.preventDefault();       
         dispatch(forgotpassword(formdata, navigate, showtoast ));        

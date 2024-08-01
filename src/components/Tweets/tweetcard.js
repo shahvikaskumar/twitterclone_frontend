@@ -17,7 +17,7 @@ const Tweetcard = (props) => {
     const {user, token, loading} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     
-
+    // Update state with new tweet props
     useEffect(() => {
         if(props){
         settweet(props.tweet);        
@@ -27,6 +27,7 @@ const Tweetcard = (props) => {
         // eslint-disable-next-line
     },[props.tweet]);
     
+    // Handle like/unlike tweet
     const handlelike = (tweetid) => {
         if(tweet?.likes?.includes(user._id)){
             dispatch(Tweetdislike(token, tweetid, user._id, showtoast));
@@ -34,36 +35,41 @@ const Tweetcard = (props) => {
         else {
             dispatch(Tweetlike(token, tweetid, user._id, showtoast));
         }
-    }
+    };
 
+    // Handle tweet deletion
     const handledelete = (tweetid) => {
         const confirmed = window.confirm("Are you sure you want to delete this tweet?");
         if(confirmed){
             dispatch(Tweetdelete(token, tweetid, user._id, showtoast));
         }
-    }
+    };
 
+    // Handle retweet action
     const retweet = (tweetid) => {
         dispatch(Tweetretweet(token, tweetid, user._id, showtoast));
-    }
+    };
     
+    // Format tweet creation date
     const formatdate = (createdate) => {
         
         const date = new Date(createdate);
-        const istDate = new Date(date.getTime() - 5.5 * 60 * 60 * 1000);    
         const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-        const tweetdate = istDate.toLocaleDateString('en-IN', options);
+        const tweetdate = date.toLocaleDateString('en-US', options);
         return tweetdate;
     };
-    
+
+    // Navigate to user profile
     const handleprofile = (id) => {
         navigate(`/profile/${id}`);
     }
 
+    // Navigate to tweet details page
     const gototweetdetails = (id) => {
         navigate(`/tweet/${id}`);
     }
 
+    // Open reply dialog
     const replytweet = (tweet) => {
         dispatch(setreplytweet(tweet));
         dispatch(settweetdialog(true));

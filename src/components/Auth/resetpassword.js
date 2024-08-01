@@ -19,14 +19,18 @@ const Resetpasswordform = () => {
         cpassword:''        
     });
 
+    // Update form data state when input changes
     const handlechange = (e) => {
         setformdata({
             ...formdata, [e.target.name]:e.target.value
         });
     };
 
+    // Handle form submission
     const handlesubmit = async (e) => {
-        e.preventDefault();       
+        e.preventDefault();  
+        
+        // Check if passwords match
         if(formdata.password !== formdata.cpassword){
             dispatch(showtoast({message:"Password do not match"}));
             return;

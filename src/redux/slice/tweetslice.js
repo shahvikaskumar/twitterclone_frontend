@@ -19,19 +19,24 @@ const tweetslice = createSlice({
     name: 'tweet',
     initialState,
     reducers: {
+
+        // Sets the visibility of the tweet dialog
         settweetdialog(state, action) {
             state.tweetdialog = action.payload;
             
         },  
         
+        // Sets the flag to indicate a change in tweets
         setchangetweet(state, action){
             state.changetweet = action.payload;
         },
 
+        // Sets the visibility of the menu canvas
         setmenucanvas(state, action){
             state.menucanvas = action.payload;
         },
 
+        // Sets all tweets and handles retweet structure
         setalltweet(state,action){
             const tweets = action.payload;
             state.alltweet = tweets;
@@ -54,22 +59,27 @@ const tweetslice = createSlice({
             state.alltweet.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt  ));
         },
 
+        // Adds a new tweet to the list of all tweets
         setaddtweet(state, action){
             state.alltweet = [action.payload, ...state.alltweet];
         },
 
+        // Sets the tweet to which a reply is being made
         setreplytweet(state, action){
             state.replytweet = action.payload;
         },
 
+        // Sets the single tweet data
         setsingletweet(state, action){
             state.singletweet = action.payload;
         },
 
+        // Sets the tweets of a specific user
         setusertweet(state,action){
             state.usertweet = action.payload;
         },
 
+        // Updates likes for a tweet in all relevant places
         setupdatelikes(state, action){
             const updatedTweet = action.payload;
             const tweetIndex = state.alltweet.findIndex(tweet => tweet._id === updatedTweet._id);
@@ -107,6 +117,7 @@ const tweetslice = createSlice({
             }    
         },
 
+        // Updates retweets for a tweet in all relevant places
         setupdateretweet(state, action){
             const updatedTweet = action.payload;
             const tweetIndex = state.alltweet.findIndex(tweet => tweet._id === updatedTweet._id);
@@ -132,7 +143,7 @@ const tweetslice = createSlice({
                 
             state.alltweet.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt  ));
 
-
+            
             const usertweetIndex = state.usertweet?.findIndex(tweet => tweet._id === updatedTweet._id);
             if (usertweetIndex !== -1) {
                 state.usertweet[usertweetIndex] = {
@@ -160,6 +171,7 @@ const tweetslice = createSlice({
             }    
         },
 
+        // Deletes a tweet from all relevant places
         settweetdelete(state, action){
             const tweetdelete = action.payload;
             state.alltweet = state.alltweet.filter(tweet => tweet._id !== tweetdelete);
@@ -173,6 +185,7 @@ const tweetslice = createSlice({
 
         },
 
+        // Updates replies for a tweet
         setupdatereply(state, action){
             const updatedTweet = action.payload;
             const tweetIndex = state.alltweet.findIndex(tweet => tweet._id === updatedTweet._id);
@@ -184,12 +197,10 @@ const tweetslice = createSlice({
             }            
             
         },
-
-
-
     },
 });
 
+//#region Async action to create a new tweet
 export const Createtweet = createAsyncThunk('tweet/create', async({data,token,showtoast, modalclose},{dispatch}) => {
     try{
         dispatch(setloading(true));
@@ -214,7 +225,9 @@ export const Createtweet = createAsyncThunk('tweet/create', async({data,token,sh
         modalclose();
     }
 });
+//#endregion
 
+//#region Async action to get all tweets
 export const Getalltweet = (token) => async (dispatch) => {
     try{
 
@@ -226,9 +239,7 @@ export const Getalltweet = (token) => async (dispatch) => {
 
         dispatch(setloading(true));
         const response = await axios.get(`${Base_URL}tweet`,config);
-        dispatch(setalltweet(response.data.tweets));
-        
-        
+        dispatch(setalltweet(response.data.tweets));        
     }
     catch(error){
         console.log(error);
@@ -237,7 +248,9 @@ export const Getalltweet = (token) => async (dispatch) => {
         dispatch(setloading(false));
     }
 };
+//#endregion
 
+//#region Async action to like a tweet
 export const Tweetlike = (token, tweetid, userid, showtoast) => async(dispatch) => {
     try{
 
@@ -255,7 +268,9 @@ export const Tweetlike = (token, tweetid, userid, showtoast) => async(dispatch) 
         dispatch(showtoast({message:err.response?.data?.error || 'An error occured',type:"error"}))
     }
 };
+//#endregion
 
+//#region Async action to dislike a tweet
 export const Tweetdislike = (token, tweetid, userid, showtoast) => async(dispatch) => {
     try{
 
@@ -273,7 +288,9 @@ export const Tweetdislike = (token, tweetid, userid, showtoast) => async(dispatc
         dispatch(showtoast({message:err.response?.data?.error || 'An error occured',type:"error"}))
     }
 };
+//#endregion
 
+//#region Async action to reply to a tweet
 export const Tweetreply = createAsyncThunk('tweet/reply', async({data, token, showtoast,tweetid ,modalclose},{dispatch}) => {
     try{
         dispatch(setloading(true));
@@ -301,7 +318,9 @@ export const Tweetreply = createAsyncThunk('tweet/reply', async({data, token, sh
         modalclose();
     }
 });
+//#endregion
 
+//#region Async action to get a single tweet
 export const Getsingletweet = (token , tweetid) => async (dispatch) => {
     try{
         dispatch(setloading(true));
@@ -321,8 +340,9 @@ export const Getsingletweet = (token , tweetid) => async (dispatch) => {
         dispatch(setloading(false));
     }
 };
+//#endregion
 
-
+//#region Async action to delete a tweet
 export const Tweetdelete = (token, tweetid, userid, showtoast) => async(dispatch) => {
     try{
         dispatch(setloading(true));
@@ -344,8 +364,9 @@ export const Tweetdelete = (token, tweetid, userid, showtoast) => async(dispatch
         dispatch(setloading(false));
     }
 }; 
+//#endregion
 
-
+//#region Async action to retweet a tweet
 export const Tweetretweet = (token, tweetid, userid, showtoast) => async(dispatch) => {
     try{
         dispatch(setloading(true));
@@ -368,6 +389,9 @@ export const Tweetretweet = (token, tweetid, userid, showtoast) => async(dispatc
         dispatch(setloading(false));
     }
 };
+//#endregion
 
+// Exporting actions and reducer
 export const { settweetdialog, setchangetweet , settweetdelete , setreplytweet, setsingletweet , setupdatereply, setmenucanvas , setupdatelikes, setupdateretweet, setusertweet , setalltweet, setaddtweet } = tweetslice.actions;
+
 export default tweetslice.reducer;

@@ -12,6 +12,7 @@ const Tweetdetails = () => {
     const [tweet] = useSelector((state) => state.tweet.singletweet);
     const {changetweet } = useSelector((state) => state.tweet);
 
+    // Fetch single tweet details on component mount or when token/id changes, or when a new tweet is available
     useEffect(() => {
         if(token && id && !changetweet){
             dispatch(Getsingletweet(token, id));
@@ -24,10 +25,14 @@ const Tweetdetails = () => {
         <>
         <div className="mx-2">
             <h1 className="my-2"> Tweet Details</h1>
+
+            {/* Display the tweet if available */}
             {tweet && <Tweetcard tweet={tweet} />}
         </div>
         <div className="mx-2">
             <h2 className="my-3">Replies</h2>
+
+            {/* Display each reply as a Tweetcard */}
             {tweet?.replies?.map((tweet, index) => (
                 <Tweetcard key={index} tweet={tweet} />
             ))}

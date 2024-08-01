@@ -19,7 +19,7 @@ const Tweetdialog = (props) => {
     const [formdata, setformdata] = useState(initialdata);
     const [imgpre, setimgpre] = useState(null);
     
-
+    // Reset form data and image preview when props.tweet changes
     useEffect(() => {
     
             setformdata(initialdata);
@@ -28,7 +28,7 @@ const Tweetdialog = (props) => {
         // eslint-disable-next-line
     },[props.tweet]);
 
-    
+    // Handle modal close and reset state
     const handleclose = () => {
         setformdata(initialdata);
         setimgpre(null);
@@ -36,6 +36,7 @@ const Tweetdialog = (props) => {
         dispatch(settweetdialog(false));
     };
 
+    // Handle form input changes
     const handlechange = (e) => {
         const {name, value, type, files} = e.target;
         if(type === 'file'){
@@ -57,6 +58,7 @@ const Tweetdialog = (props) => {
     };
 
 
+    // Handle form submission
     const handlesubmit = async () => {
         if(formdata.content !== null && formdata.content !== ''){
             const data = {...formdata, userid:user._id};

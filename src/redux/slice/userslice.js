@@ -4,27 +4,30 @@ import { Base_URL } from "../../Utility/config";
 import { setloading} from "./authslice";
 import { setusertweet } from "./tweetslice";
 
-
+// Initial state for user slice
 const initialState = {
     singleuser:'',
     btnedit:false,
     btnphoto:false,
-    
-
 };
+
 
 const userslice = createSlice({
     name:'user',
     initialState,
     reducers:{
+
+        // Sets the single user's details
         setsingleuser(state, action){
             state.singleuser = action.payload;
         },
 
+        // Toggles the edit modal visibility
         setbtnedit(state,action){
             state.btnedit = action.payload;
         },
 
+        // Toggles the upload photo modal visibility
         setbtnphoto(state, action){
             state.btnphoto = action.payload;
         },

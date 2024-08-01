@@ -10,10 +10,13 @@ const initialState = {
     mloader:false,     
 };
 
+//#region Create auth slice
 const authslice = createSlice({
     name:'auth',
     initialState,
     reducers:{
+
+        // Sets the authentication state with token and user details
         setauth(state, action){
             const {token, user} = action.payload;
             state.token = token;
@@ -23,6 +26,7 @@ const authslice = createSlice({
 
         },
 
+        // Clears the authentication state
         clearauth(state) {
             state.token = null;
             state.isauth = false;
@@ -31,25 +35,31 @@ const authslice = createSlice({
             state.mloader = false;
         },
 
+        // Sets the loading state
         setloading(state, action){
             state.loading = action.payload;
         },        
 
+        // Sets the modal loader state
         setmloader(state,action){
             state.mloader = action.payload;
         },        
 
+        // Sets an error message and stops the loading state
         seterror(state, action){
             state.error = action.payload;
             state.loading = false;
         },
 
+        // Updates the user information
         setuserupdate(state,action){
             state.user=action.payload;            
         },        
     },
 });
+//#endregion
 
+//#region Async thunk to verify token and set authentication state
 export const verifytoken = (token) => async (dispatch) => {
     
     try{
@@ -78,9 +88,10 @@ export const verifytoken = (token) => async (dispatch) => {
         dispatch(setmloader(false));
     }
 };
+//#endregion
 
-export const register = (data , navigate, showtoast) => async (dispatch) => {
-    
+//#region Async thunk for user registration
+export const register = (data , navigate, showtoast) => async (dispatch) => {   
     
     try{
         dispatch(setloading(true));
@@ -96,7 +107,9 @@ export const register = (data , navigate, showtoast) => async (dispatch) => {
         dispatch(setloading(false));       
     }
 };
+//#endregion
 
+//#region Async thunk for user login
 export const login = (data, navigate, showtoast, prevpath) => async (dispatch) =>{
     
     try{
@@ -111,9 +124,7 @@ export const login = (data, navigate, showtoast, prevpath) => async (dispatch) =
         }else {
 
         navigate('/');
-        }
-        
-        
+        }        
     }
     catch(error){
         dispatch(seterror(error.message));
@@ -122,8 +133,10 @@ export const login = (data, navigate, showtoast, prevpath) => async (dispatch) =
     finally{
         dispatch(setloading(false));
     }
-}
+};
+//#endregion
 
+//#region Async thunk for user logout
 export const logout = (navigate, showtoast) => async (dispatch) => {
     
     try{
@@ -137,7 +150,9 @@ export const logout = (navigate, showtoast) => async (dispatch) => {
         dispatch(showtoast({message:'Logout Unsuccessfully.',type:'error'}));
     }
 };
+//#endregion
 
+//#region Async thunk for password reset request
 export const forgotpassword = (data,navigate, showtoast) => async (dispatch) => {
     try{
         dispatch(setloading(true));
@@ -152,9 +167,10 @@ export const forgotpassword = (data,navigate, showtoast) => async (dispatch) => 
     finally{
         dispatch(setloading(false));
     }
-
 };
+//#endregion
 
+//#region Async thunk for resetting the password
 export const Resetpassword = (data, navigate, showtoast) => async  (dispatch) => {
 
     try{
@@ -171,7 +187,8 @@ export const Resetpassword = (data, navigate, showtoast) => async  (dispatch) =>
         dispatch(setloading(false));
     }
 };
+//#endregion
 
-export const {setauth, setallusers, setsingleuser , setuserupdate, clearauth, setloading, setmloader , seterror} = authslice.actions;
+export const {setauth, seterror, setuserupdate, clearauth, setloading, setmloader} = authslice.actions;
 
 export default authslice.reducer;

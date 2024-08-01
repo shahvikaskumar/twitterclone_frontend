@@ -20,6 +20,7 @@ const Profile = () => {
     const {usertweet} = useSelector((state) => state.tweet);
     const {changetweet } = useSelector((state) => state.tweet);
 
+    // Fetch single user details on component mount or when token/id changes
     useEffect(() =>{        
         if(token && id){
         dispatch(Getsingleuser(token, id, showtoast));
@@ -27,36 +28,43 @@ const Profile = () => {
         
     },[token, id, dispatch ]);
 
+    // Fetch tweets of the user when user details change or new tweets are available
     useEffect(() => {
         if(token && otheruser && !changetweet){
         dispatch(Getusertweet(token, otheruser._id));       
         }   
     },[otheruser,token, dispatch, changetweet]);
 
+    // Format date to IST and return as a readable string
     const formatdate = (createdate) => {
         
-        const date = new Date(createdate);
-        const istDate = new Date(date.getTime() - 5.5 * 60 * 60 * 1000);    
+        const date = new Date(createdate);        
         const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-        const tweetdate = istDate.toLocaleDateString('en-US', options);
+        const tweetdate = date.toLocaleDateString('en-US', options);
         return tweetdate;
     };
 
+    // Handle follow action
     const handlefollow = () => {
         dispatch(Userfollow(token, otheruser._id, user._id, showtoast));
     }
 
+    // Handle unfollow action
     const handleunfollow = () => {
         dispatch(Userunfollow(token, otheruser._id, user._id, showtoast));
     }
 
+    // Show edit user details modal
     const editmodalshow = () => {
         dispatch(setbtnedit(true));
     }
 
+    // Show profile photo update modal
     const photomodalshow = () => {
         dispatch(setbtnphoto(true));
     }
+
+    
     return (
         <div className="mx-2">
         <h1 className="my-2"> Profile</h1>

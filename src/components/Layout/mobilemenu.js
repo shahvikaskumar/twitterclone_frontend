@@ -14,29 +14,35 @@ const Mobilemenu = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // Function to show the tweet dialog
     const handleshow = () => {
         dispatch(settweetdialog(true));    
     };
 
+    // Function to handle user logout
     const handlelogout = () => {
         dispatch(logout(navigate, showtoast));
     };
 
+    // Function to handle logout and close the menu canvas
     const handlemenulogout = () => {
         dispatch(logout(navigate, showtoast));
         dispatch(setmenucanvas(false));
     }
 
+    // Function to open the menu canvas
     const handlemenushow = () => {
         dispatch(setmenucanvas(true));
     }
 
+    // Function to close the menu canvas
     const handlemenuclose = () => {
         dispatch(setmenucanvas(false));
     }
 
     return (
         <>
+            {/* Navbar for mobile view (top) */}
             <Navbar className=' d-sm-none bg-dark justify-content-around py-1 sticky-top'>                
                 <NavLink className='m-0 px-3 p-1 text-warning fs-2 btn border-0' onClick={handlemenushow} >
                         <FontAwesomeIcon icon={faBars}  />    
@@ -50,6 +56,7 @@ const Mobilemenu = () => {
             </Navbar>
 
 
+            {/* Navbar for mobile view (bottom) */}
             <Navbar className='justify-content-around d-sm-none bg-dark py-1 fixed-bottom'>
                 <NavLink className="fs-2 p-1 text-warning" to="/home">
                     <FontAwesomeIcon icon={faHome} />
@@ -68,6 +75,7 @@ const Mobilemenu = () => {
                 </NavLink>                
             </Navbar>
 
+            {/* Offcanvas menu for mobile view */}
             <Offcanvas show={menucanvas} className="bg-body-secondary" onHide={handlemenuclose} style={{width:"280px"}} >
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Menu</Offcanvas.Title>

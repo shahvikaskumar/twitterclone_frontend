@@ -15,10 +15,12 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const location = useLocation()
 
+    // Function to add an 'active-link' class if the path matches the current route
     const isactive = (path) => {
         return location.pathname === path ? 'active-link' : '';
     };
 
+    // Function to handle user logout
     const handlelogout = () => dispatch(logout(navigate, showtoast));
 
     return (
