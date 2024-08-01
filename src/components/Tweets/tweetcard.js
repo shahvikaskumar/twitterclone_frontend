@@ -94,7 +94,7 @@ const Tweetcard = (props) => {
                     <p className='ms-2  text-wrap'>{tweet?.content}
                     </p>
                     {tweet?.imageurl && 
-                    <img className='img-fluid' src="https://res.cloudinary.com/dp0wfs6kx/image/upload/v1722159372/arham-tweet/images/d6e872b76ijxhpgmnhyx.jpg" alt="" />
+                    <img className='img-fluid' src={tweet.imageurl} alt="" />
                     }
                     </div>
                     <div className='d-flex justify-content-around'>
