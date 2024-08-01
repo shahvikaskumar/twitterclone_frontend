@@ -77,7 +77,7 @@ const Tweetcard = (props) => {
             <div className="d-flex mx-2 ">
                 <div className='ratio flex-shrink-0 ratio-1x1  rounded-circle overflow-hidden' style={{width:"40px" , height:"40px"}}>
                     {tweet?.tweetedby?.profile_picurl  ? (
-                    <img className='img-fluid' src={tweet?.tweetedby?.profilepicurl}  alt=""  />
+                    <img className='img-fluid' src={tweet?.tweetedby?.profile_picurl}  alt=""  />
                     ) : (
                         <FontAwesomeIcon icon={faUserCircle} />
                     )}
