@@ -34,7 +34,7 @@ const tweetslice = createSlice({
 
         setalltweet(state,action){
             const tweets = action.payload;
-            state.alltweet.push(tweets[0]);
+            state.alltweet = tweets;
             tweets.forEach(tweet => {
                 const retweetcount = tweet.retweetby.length;
                 const retweet = tweet.toJSON ? tweet.toJSON() : tweet;
